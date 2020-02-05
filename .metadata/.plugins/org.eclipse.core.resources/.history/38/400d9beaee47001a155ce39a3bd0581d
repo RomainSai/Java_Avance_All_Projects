@@ -1,0 +1,86 @@
+package fr.eni.jpa.main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.eni.jpa.dal.DAOUtil;
+import fr.eni.jpa.dal.PersonneDAO;
+import fr.eni.jpa.entity.Address;
+import fr.eni.jpa.entity.User;
+
+public class TestUser {
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+	
+		//nouvelle instance de Adresse (*4) et d'user (*2)
+		Address a1 = new Address("44000", "Nantes");
+		Address a2 = new Address("35000", "Rennes");
+		Address a3 = new Address("29200", "Brest");
+		Address a4 = new Address("75000", "Paris");
+		
+		List<Address> l1 = new ArrayList<>();
+		l1.add(a1);
+		l1.add(a2);
+		List<Address> l2 = new ArrayList<>();
+		l2.add(a3);
+		l2.add(a4);
+		
+		User u1 = new User("Lebrun", "Jeanne", l1);
+		User u2 = new User("Leblond", "Annie", l2);
+		
+		//nouvelle instance PersonneDAO vide
+		PersonneDAO pdao = new PersonneDAO();
+		try {
+			pdao.add(u1);
+			pdao.add(u2);
+
+			List<User> liste = pdao.findAll();
+			System.out.println("Les personnes : ");
+			System.out.println(liste);
+			
+			a1.setCodepostal("44100");
+			Address a5 = new Address("29400", "Bodilis");
+			u1.getListeAddresses().add(a5);
+			pdao.update(u1);
+			
+			liste = pdao.findAll();
+			System.out.println("Les personnes après ajout et modif de l'adresse : ");
+			System.out.println(liste);
+
+			System.out.println("Suppression de "+ a2);
+			u1.getListeAddresses().remove(a2);
+			pdao.update(u1);
+			liste = pdao.findAll();
+			System.out.println("Les personnes après supression de l'adresse : " + a2);
+			System.out.println(liste);
+			
+			//orphan
+			Address a6 = new Address("22000", "Saint Brieuc");
+			
+			//Toutes les entités liées à cette liste seront détachées
+			u2.getListeAddresses().clear();
+			u2.getListeAddresses().add(a6);
+			
+			try {
+				pdao.update(u2);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			liste = pdao.findAll();
+			System.out.println("Les personnes après modif des adresses de u2 : ");
+			System.out.println(liste);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		DAOUtil.close();
+		
+	}
+	
+}

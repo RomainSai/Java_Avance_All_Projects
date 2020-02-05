@@ -1,0 +1,88 @@
+package fr.eni.jpa.main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.eni.jpa.dal.AddressDAO;
+import fr.eni.jpa.dal.DAOUtil;
+import fr.eni.jpa.dal.PersonneDAO;
+import fr.eni.jpa.entity.Address;
+import fr.eni.jpa.entity.User;
+
+public class TestUser {
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+	
+		//nouvelle instance de Adresse (*4) et d'user (*2)
+		Address a1 = new Address("44000", "Nantes");
+		Address a2 = new Address("35000", "Rennes");
+		Address a3 = new Address("29200", "Brest");
+		Address a4 = new Address("75000", "Paris");
+		
+		List<Address> l1 = new ArrayList<>();
+		l1.add(a1);
+		l1.add(a2);
+		List<Address> l2 = new ArrayList<>();
+		l2.add(a3);
+		l2.add(a4);
+		
+		User u1 = new User("Lebrun", "Jeanne", l1);
+		User u2 = new User("Leblond", "Annie", l2);
+		
+		//nouvelle instance PersonneDAO vide
+		PersonneDAO pdao = new PersonneDAO();
+		try {
+			pdao.add(u1);
+			pdao.add(u2);			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		List<User> liste = pdao.findAll();
+		System.out.println("Les personnes : ");
+		System.out.println(liste);
+		
+		Address a5 = new Address("75001", "Paris");
+		List<Address> l3 = new ArrayList<>();
+		l3.add(a5);
+		User p3 = new User("Lechauve", "Marie", l3);
+		
+		AddressDAO adao = new AddressDAO();
+		try {
+			adao.add(a5);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		liste = pdao.findAll();
+		System.out.println("Les personnes après ajout de adresse : " + a5);
+		System.out.println(liste);
+		
+		System.out.println("Supression de la personne " + u1);
+		try {
+			pdao.delete(u1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		liste = pdao.findAll();
+		System.out.println(liste);
+		
+		System.out.println("Supression d'une adresse de u2 ");
+		try {
+			adao.delete(a3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		liste = pdao.findAll();
+		System.out.println(liste);
+		
+		DAOUtil.close();
+		
+	}
+	
+}

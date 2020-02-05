@@ -1,0 +1,3 @@
+INDEX VERSION 1.130
+C:\Users\rsaillou2018\Desktop\J2E\Workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4152470980.index
+\sook-api\.mvn\wrapper

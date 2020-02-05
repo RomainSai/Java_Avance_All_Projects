@@ -1,0 +1,61 @@
+package fr.eni.jpa.entity;
+
+import java.util.List;
+
+import fr.eni.jpa.dal.CiviliteDAO;
+import fr.eni.jpa.dal.DAOUtil;
+import fr.eni.jpa.dal.PaysDAO;
+import fr.eni.jpa.dal.PersonneDAO;
+
+public class TestUser {
+	
+	public static void main(String[] args) {
+		
+		PersonneDAO pdao = new PersonneDAO();
+		PaysDAO paysdao = new PaysDAO();
+		
+		try {
+			Pays fr = getPays("fr", "France");
+			Pays it = getPays("it", "Italie");
+			Pays gb = getPays("gb", "Grande Bretagne");
+			Pays gr = getPays("gr", "Grèce");
+			Pays es = getPays("es", "Espagne");
+
+			
+			User p1 = new User("Leblond", "Annie");
+			User p2 = new User("Lebrun", "Sophie");
+
+			pdao.add(p1);
+			
+			pdao.add(p2);
+
+			
+			System.out.println("Liste des personnes : ");
+			List<User> listeU = pdao.findAll();
+			System.out.println(listeU);
+			
+			System.out.println("Supression de toutes les femmes : ");
+			pdao.delete(p1);
+			pdao.delete(p2);
+			listeU = pdao.findAll();
+			System.out.println(listeU);
+			List<Civilite> listeC = cdao.findAll();
+			System.out.println(listeC);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		DAOUtil.close();
+	}
+	
+	private static Pays	getPays(String cle, String libelle) throws Exception {
+		PaysDAO paysdao = new PaysDAO();
+		Pays p = paysdao.findById(cle);
+		if (p == null) {
+			p = new Pays(cle, libelle);
+			paysdao.add(p);
+		}
+		return p;
+	}
+}

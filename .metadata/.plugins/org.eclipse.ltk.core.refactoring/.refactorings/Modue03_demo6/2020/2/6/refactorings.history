@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AddressDAO.java&apos; to &apos;Modue03_demo9/src/main/java/fr.eni.jpa.dal&apos;&#x0D;&#x0A;- Original project: &apos;Modue03_demo6&apos;&#x0D;&#x0A;- Destination element: &apos;Modue03_demo9/src/main/java/fr.eni.jpa.dal&apos;&#x0D;&#x0A;- Original element: &apos;fr.eni.jpa.dal.AddressDAO.java&apos;" description="Copy compilation unit" destination="=Modue03_demo9/src\/main\/java&lt;fr.eni.jpa.dal" element1="/src\/main\/java&lt;fr.eni.jpa.dal{AddressDAO.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1580831564921" units="1" version="1.0"/>
+</session>
